@@ -1,6 +1,7 @@
 import sys
 import pygame
 import Scenebase
+import Dataloader
 
 
 class AvatarScene(Scenebase.SceneBase):
