@@ -9,18 +9,16 @@ class AvatarScene(Scenebase.SceneBase):
        self.next = self
 
     def ProcessInput(self, events, keys):
-        # for event in events:
-        #     if event.type == sys.QUIT:
-        #         pygame.quit()
-        #         sys.exit()
-        pass
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    self.SwitchToScene(ActionsScene())
 
     def Update(self):
-        print("uh-oh, you didn't override this in the child class")
+        pass
 
     def Render(self, screen):
-        font_family = "Century Gothic"
-        fontH1 = pygame.font.SysFont(font_family, 40, bold=False, italic=False)
+        fontH1 = pygame.font.SysFont(self.font_family, 40, bold=False, italic=False)
         header = fontH1.render("Welcome to United People", True, (255,0,0), self.colorBG)
         headerPos = header.get_rect()
         headerPos.centerx = screen.get_rect().centerx
@@ -29,3 +27,39 @@ class AvatarScene(Scenebase.SceneBase):
         
         screen.fill(self.colorBG)
         screen.blit(header, headerPos)
+
+        #pygame.draw.rect(surface, color, pygame.Rect(left, top, width, height))
+        avWidth = 200
+        avHeight = 350
+        pygame.draw.rect(screen, (0, 0, 255), pygame.Rect(screen.get_rect().centerx - avWidth/2,
+                                                          screen.get_rect().centery - avHeight/2,
+                                                          avWidth,
+                                                          avHeight))
+
+class ActionsScene(Scenebase.SceneBase):
+    
+    def __init__(self):
+        self.next = self
+
+    def ProcessInput(self, events, keys):
+        pass
+
+    def Update(self):
+        pass
+
+    def Render(self, screen):
+        fontH1 = pygame.font.SysFont(self.font_family, 40, bold=False, italic=False)
+        header = fontH1.render("Your Self", True, (255,0,0), self.colorBG)
+        headerPos = header.get_rect()
+        headerPos.centerx = screen.get_rect().centerx
+        #headerPos.centery = screen.get_rect().centery
+        headerPos.centery = 45
+
+        screen.fill(self.colorBG)
+        screen.blit(header, headerPos)
+
+    def SwitchToScene(self, next_scene):
+        self.next = next_scene
+
+    def Terminate(self):
+        self.SwitchToScene(None)
